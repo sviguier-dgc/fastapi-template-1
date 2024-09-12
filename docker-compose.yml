@@ -1,0 +1,42 @@
+version: "3.10"
+
+services:
+  db:
+    container_name: "fastapi_template_db"
+    image: postgres:13.4
+    volumes:
+      - .pgdata:/var/lib/postgresql/data
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: "fastapi_template_db"
+
+  db_test:
+    container_name: "fastapi_template_db_test"
+    image: postgres:13.4
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: "fastapi_template_db_test"
+
+  # Runs the app from inside container with debugger
+  # app:
+  #   image: "fastapi_template:latest"
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8000:8000"
+  #     - "5678:5678"
+  #   environment:
+  #     GOOGLE_APPLICATION_CREDENTIALS: "/gcp/application_default_credentials.json"
+  #     GCLOUD_PROJECT: "sandbox-sviguier"
+  #     WATCHFILES_FORCE_POLLING: 1
+  #     PYDEVD_DISABLE_FILE_VALIDATION: 1
+  #   volumes:
+  #     - ~/.config/gcloud:/gcp:ro
+  #     - ./app:/code/app

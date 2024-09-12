@@ -1,0 +1,59 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run app locally",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["app.main:app", "--reload"],
+      "jinja": true,
+      "justMyCode": true,
+      "env": {
+        "PYDEVD_DISABLE_FILE_VALIDATION": "1"
+      }
+    },
+    {
+      "name": "Attach debugger to app container",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 5678
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "/code"
+        }
+      ]
+    },
+    {
+      "name": "Apply migrations locally",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "alembic",
+      "args": ["upgrade", "head"],
+      "jinja": true,
+      "justMyCode": true,
+      "env": {
+        "SQLALCHEMY_DATABASE_URI": "postgresql+asyncpg://postgres:postgres@localhost:5434/fastapi_template_db"
+      }
+    },
+    {
+      "name": "Apply migrations on Cloud SQL Instance",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "alembic",
+      "args": ["upgrade", "head"],
+      "jinja": true,
+      "justMyCode": true,
+      "env": {
+        "SQLALCHEMY_DATABASE_URI": "postgresql+asyncpg://fastapi-template-user:password@/fastapi_template_db?host=/var/cloudsql/sandbox-sviguier:europe-west1:fastapi-template-instance"
+      }
+    }
+  ]
+}
